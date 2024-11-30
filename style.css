@@ -1,0 +1,757 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    overflow: hidden; /* Evita el desplazamiento de la página */
+}
+
+.page {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+}
+
+.side-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 130px;
+    width: 150px; /* Ajusta el tamaño según sea necesario */
+}
+
+.side-content p {
+    transform: rotate(-90deg);
+    font-size: 36px;
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    opacity: 0;
+    animation-name: side-content-text;
+    animation-duration: 0.5s;
+    animation-delay: 2.5s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes side-content-text {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.side-content img {
+    width: 150px; /* Ajusta el tamaño de la imagen según sea necesario */
+    height: 150px; /* Mantiene la proporción de la imagen */
+    animation: float 3s ease-in-out infinite; /* Añade animación de flotabilidad */
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-30px); /* Ajusta el valor para el efecto de flotabilidad */
+    }
+}
+
+.side-content div {
+    background: var(--violet);
+    grid-column: 4 / 7;
+    grid-row: 1 / 2;
+    height: 100%;
+}
+
+.loader {
+    background: #05edfd;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed; /* Asegura que el loader esté fijo en la pantalla */
+    top: 0;
+    left: 0;
+    z-index: 9999; /* Asegura que el loader esté por encima de otros elementos */
+    animation: loader 3s linear forwards;
+}
+
+@keyframes loader {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    94% {
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.loader div {
+    background: rgb(50, 205, 171);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 20px;
+    transform: scale(0);
+    animation: scaling 1500ms ease-in-out infinite;
+}
+
+.loader div:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.loader div:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.loader div:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+@keyframes scaling {
+    0%, 100% {
+        transform: scale(1.3);
+    }
+    50% {
+        transform: scale(.8);
+    }
+}
+
+:root {
+    --blue: #0606ce;
+    --bluefish: #05edfd;
+    --greenfly: #04ff19;
+}
+
+header {
+    background: rgb(22, 16, 16);
+    padding: 15px 20px; /* Cambia el padding para ajustarlo mejor */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+}
+
+header nav {
+    display: flex;
+    gap: 20px; /* Espaciado entre los botones */
+}
+
+.card {
+    width: 50px;
+    height: 50px;
+    transform-style: preserve-3d;
+    position: relative;
+    top: -8px;
+}
+
+.card:hover {
+    transform: rotateY(180deg);
+}
+
+.face {
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+.face.front {
+    background: pink;
+}
+
+.face.back {
+    background: rgb(240, 231, 131);
+    transform: rotateX(180deg);
+}
+
+.face img {
+    width: 75px;
+    height: 70px;
+    border-radius: 5px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .card {
+        transition: transform 1s;
+        transform-style: preserve-3d;
+    }
+    .card:hover {
+        transform: rotateY(180deg);
+    }
+    .face {
+        backface-visibility: hidden;
+    }
+    .face.back {
+        transform: rotateY(180deg);
+        opacity: 1;
+    }
+}
+
+.parallax-container {
+    width: 100%;
+    height: 100vh;
+    perspective: 1px; /* Ajusta el valor según el efecto de profundidad deseado */
+    perspective-origin: 50%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+}
+
+.image_background {
+    height: 100%;
+    width: 100%;
+    transform: translateZ(0px) scale(1);
+    transform-origin: 0 100%;
+    position: absolute; /* Cambiado a absoluto para cubrir todo el contenedor */
+    top: 0; /* Ajusta la posición */
+    left: 0; /* Ajusta la posición */
+}
+
+.image_background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta la imagen para cubrir todo el contenedor */
+}
+
+.info-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white; /* Cambia el color según el diseño */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.image_middle {
+    width: 100%;
+    height: 100%;
+    transform: translateZ(-1px) scale(1.1);
+    position: absolute; /* Cambiado a absoluto para cubrir todo el contenedor */
+    top: 0; /* Ajusta la posición */
+    left: 0; /* Ajusta la posición */
+    display: flex; /* Utiliza flexbox para centrar las imágenes */
+    justify-content: center;
+    align-items: center;
+}
+
+.image_middle img {
+    max-width: 100%; /* Ajusta el tamaño según el contenedor */
+    max-height: 100%; /* Ajusta el tamaño según el contenedor */
+}
+
+.cards {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px; /* Añade margen entre las cartas */
+    position: absolute;
+}
+.one {
+    right: 1100px;
+    top: 80px; /* Puedes ajustar la posición en la parte superior */
+    opacity: 0.8;
+}
+.two {
+    right: 1060px;
+    top: 400px; /* Puedes ajustar la posición en la parte superior */
+    opacity: 0.6;
+}
+.three {
+    left: 660px;
+    top: 550px; /* Puedes ajustar la posición en la parte superior */
+    opacity: 0.5;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
+    background-color: #696e74;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #40454b;
+}
+
+.center-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%; /* Cambia para centrar verticalmente */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centra el contenido horizontal y verticalmente */
+}
+.informacion {
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    margin-top: -90px; /* Ajusta el margen superior según sea necesario */
+}
+.image-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#Foto {
+    width: 150px; /* Ajusta según el tamaño de tu imagen */
+    height: 150px;
+    top: -130px;
+    left: 20px;
+    border-radius: 50%;
+    border: 5px solid #0f0f0f; /* Borde negro */
+    margin: 20px 0; /* Margen arriba y abajo */
+    overflow: hidden;
+}
+
+#Foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.technologies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    animation-name: floating;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes floating {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-05px); /* Ajusta el valor para el efecto de flotabilidad */
+    }
+}
+
+.coin {
+    margin: 10px;
+    position: relative;
+    width: 80px; /* Ajusta según el tamaño deseado de las monedas */
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0; /* Oculta el texto en el centro */
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.2;
+    background-color: var(--coin-color);
+    animation: floating 3s ease-in-out infinite; /* Añade animación de flotabilidad */
+}
+
+.coin::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    font-size: 12px;
+}
+
+.coin:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.html {
+    background-color: #e34c26; /* Rojo */
+}
+
+.css {
+    background-color: #1572b6; /* Azul */
+}
+
+.javascript {
+    background-color: #f7df1e; /* Amarillo */
+}
+
+.react {
+    background-color: #7402d1; /* Azul claro */
+}
+
+.azure {
+    background-color: #740f6b; /* Azul oscuro */
+}
+
+.python {
+    background-color: #306998; /* Azul lavanda */
+}
+
+.coin img {
+    width: 60%; /* Ajusta según el tamaño de los íconos dentro de la moneda */
+    height: 60%;
+    border-radius: 50%;
+    z-index: 1; /* Asegura que el ícono esté por encima del fondo */
+}
+
+/* Específicos para HTML y CSS */
+.html img, .css img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: rgb(26, 25, 25);
+    color: #fff;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    z-index: 10;
+}
+
+footer .card {
+    margin: 0 10px;
+}
+main {
+    padding: 40px 60px;
+}
+
+main section {
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+main h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+/* CHATBOX
+=============== */
+.chatbox {
+    position: absolute;
+    bottom: 15px;
+    right: 30px;
+}
+
+/* CONTENT IS CLOSE */
+.chatbox__support {
+    display: flex;
+    flex-direction: column;
+    background: #0d77db;
+    width: 300px;
+    height: 350px;
+    z-index: -123456;
+    opacity: 0;
+    transition: all .5s ease-in-out;
+}
+
+/* CONTENT ISOPEN */
+.chatbox--active {
+    transform: translateY(-40px);
+    z-index: 123456;
+    opacity: 1;
+
+}
+
+/* BUTTON */
+.chatbox__button {
+    text-align: right;
+}
+.chatbox__button button img {
+    width: 30px; /* Ajusta el tamaño según sea necesario */
+    height: 30px; /* Ajusta el tamaño según sea necesario */
+}
+
+.send__button {
+    padding: 6px;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+
+/* HEADER */
+.chatbox__header {
+    position: sticky;
+    top: 0;
+    background: rgb(18, 212, 238);
+}
+
+/* MESSAGES */
+.chatbox__messages {
+    margin-top: auto;
+    display: flex;
+    overflow-y: scroll;
+    flex-direction: column-reverse;
+}
+
+.messages__item {
+    background: rgb(0, 0, 0);
+    max-width: 60.6%;
+    width: fit-content;
+}
+
+.messages__item--operator {
+    margin-left: auto;
+}
+
+.messages__item--visitor {
+    margin-right: auto;
+}
+
+/* FOOTER */
+.chatbox__footer {
+    position: sticky;
+    bottom: 0;
+}
+
+.chatbox__support {
+    background: #81e6ff;
+    height: 450px;
+    width: 350px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+/* HEADER */
+.chatbox__header {
+    background: var(--primaryGradient);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: var(--primaryBoxShadow);
+}
+
+.chatbox__image--header {
+    margin-right: 10px;
+}
+
+.chatbox__heading--header {
+    font-size: 1.2rem;
+    color: rgb(18, 119, 235);
+}
+
+.chatbox__description--header {
+    font-size: .9rem;
+    color: rgb(0, 0, 0);
+}
+
+/* Messages */
+.chatbox__messages {
+    padding: 0 20px;
+}
+
+.messages__item {
+    margin-top: 10px;
+    background: #fcfcfc;
+    padding: 8px 12px;
+    max-width: 70%;
+}
+
+.messages__item--visitor,
+.messages__item--typing {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.messages__item--operator {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background: var(--primary);
+    color: rgb(19, 18, 18);
+}
+
+/* FOOTER */
+.chatbox__footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px;
+    background: var(--secondaryGradient);
+    box-shadow: var(--secondaryBoxShadow);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    margin-top: 20px;
+}
+
+.chatbox__footer input {
+    width: 80%;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 30px;
+    text-align: left;
+}
+
+.chatbox__send--footer {
+    color: rgb(0, 0, 0);
+}
+
+.chatbox__button button,
+.chatbox__button button:focus,
+.chatbox__button button:visited {
+    padding: 10px;
+    background: rgb(245, 245, 248);
+    border: none;
+    outline: none;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    box-shadow: 0px 10px 15px rgba(207, 202, 202, 0.1);
+    cursor: pointer;
+}
+
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    list-style: none;
+}
+
+.social-icons li {
+    margin: 0 10px;
+}
+
+.social-icons a {
+    color: #333;
+    font-size: 1.5em;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #b6456a;
+}
+
+main .social-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+    list-style: none;
+}
+
+main .social-icons li {
+    margin-left: 10px;
+}
+
+main .social-icons .social-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0);
+    padding: 2px;
+    border-radius: 5px;
+    width: 20px;
+    height: 20px;
+}
+
+main .social-icons .social-icon img {
+    width: 50px;
+    height: 50px;
+}
+
+main .social-icons #Linkedin,
+main .social-icons #Behance,
+main .social-icons #Wordpress,
+main .social-icons #Github {
+    width: auto;
+}
+/* CSS para el modal */
+.modal {
+    display: none; /* Oculta el modal por defecto */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 200px; /* Ancho del modal */
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    padding: 10px;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.modal button {
+    margin: 5px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.modal button:hover {
+    background-color: #0056b3;
+}
